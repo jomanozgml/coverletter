@@ -19,7 +19,7 @@ The Cover Letter Generator is a Python application that helps users generate cov
 ## Requirements
 
 - Python 3.x
-- Google Generative AI API Key (sign up at https://generativeai.dev/)
+- Google Generative AI API Key (sign up at https://makersuite.google.com/)
 
 ## Installation
 
@@ -30,7 +30,7 @@ The Cover Letter Generator is a Python application that helps users generate cov
     ```bash
     pip install -r requirements.txt
 3. Set up your Google Generative AI API key in `.env` file
-    - Obtain a Google Generative AI API key by signing up at https://generativeai.dev/.  
+    - Obtain a Google Generative AI API key by signing up at https://makersuite.google.com/.  
     - Create a .env file in the project's root directory:
     ``` ini
     API_KEY=your_actual_api_key_here
@@ -53,6 +53,9 @@ Feel free to contribute to the project. Please follow the Contributing Guideline
 
 ## Acknowledgments
 Thanks to the Google Generative AI team for providing the powerful language model.
+
+## Application User Interface
+![Cover Letter Generator - UI](UI.png)
 
 ## Contact
 *Email: [manoj.shrestha8080@gmail.com](mailto:manoj.shrestha8080@gmail.com)*
