@@ -1,0 +1,79 @@
+Resume:
+-----------
+MANOJ SHRESTHA
+             Melbourne                          manoj.shrestha8080@gmail.com
+             linkedin.com/in/manojshrestha8080                                github.com/jomanozgml
+
+PROFESSIONAL PROFILE
+Enthusiastic software engineering professional with a master’s in information technology and a robust background spanning 2 years in IT administration/analysis, 1 year in web development (including an internship), and 4 years in customer service roles. Proficient in a range of programming languages such as Python, Flutter, SQL, HTML, CSS, and JavaScript. Seeking a software development role to leverage this diverse experience, contribute innovative solutions, and thrive in a collaborative environment.
+
+KEY SKILLS
+-	Solid skill on cross platform application development using Flutter(Dart), Python
+-	Hands on knowledge of GitHub workflow, Google Cloud Computing and Firebase
+-	Proficient in Front End Web Design using HTML, CSS and JavaScript
+-	Good understanding object-oriented programming languages such as C++, JAVA
+-	Skilled in Microsoft Office, Photoshop, and WordPress CMS
+-	Problem solving skills in the fields of software, hardware, and network troubleshooting
+
+EDUCATION
+Professional Year 	Aug 2022 - Present
+  Performance Education, Melbourne
+  Key Subjects: Australian Business Culture and Environment, Achieving Career Success,
+  Australian Workplace Skills and Professional Workplace Communication
+
+Master of Information Technology (Major: Software Design and Development/Systems Analysis)	Feb 2019 – Jan 2021
+  Charles Sturt University, Melbourne, Australia    |    GPA : 6.33 [Distinction]
+
+Bachelors in Computer Engineering 							         Nov 2012 – May 2017
+  Kathmandu Engineering College [KEC] (TU Affiliated), Nepal    |    GPA: 6 [Distinction]
+
+CERTIFICATION
+Introduction to Cloud Computing	Nov 2023
+Introduction to Data Analytics 	Nov 2023
+  Institute of Applied Technology, TAFE NSW
+
+AWS Builders Online Series										July 2023
+AWS Cloud Conference										               Nov 2023
+  Amazon Web Services (AWS)
+
+PROJECTS
+Project	Objective	Tech Stack
+Optical Character Recognition for Handwritten Notes
+- Charles Sturt University, Melbourne	To research on the mechanism of detection of handwritten alphabets and conversion into editable text with an aim to improve the accuracy of conversion	Python, Visual Studio Code, Windows Power Shell, Libraries such as OpenCV, Tesseract, Tkinter, Numpy etc
+
+	Duties and Result: Identified and narrowed down character recognition algorithms for optimal accuracy, achieving an average of 95% for printed text in image-to-text conversion. For handwritten text, the accuracy is currently at 70%, with potential improvement through additional training data input.
+BigWheel Game Stats
+- Personal Project	To analyze data easily and make influenced decision based on generated bar chart of the previous spin results of the BIGWHEEL game	Flutter with Riverpod for state management, Google Cloud Platform for Backend, version controlled in GitHub written with VSCode
+	Duties and Result: Developed and deployed a web application which provides a visual representation; bar chart of the frequency distribution of the different spin outcomes, allowing users to analyze the data easily and make an informed decision.
+
+RELEVANT EMPLOYMENT EXPERIENCE
+Junior Full Stack Developer [Intern]
+   Job Search Ninja, Melbourne								              Jan 2023- Apr 2023
+-	Developed User Interface for cross platform application using Flutter (Dart)
+-	Implemented backend as Google Cloud Platform (Firebase) for datastore, hosting and storage buckets
+-	Automated Continuous Integration and Continuous Deployment (CI/CD) using version control tool such as GitHub
+-	Executed event-driven Google Cloud Run (Serverless Cloud Function) using Python script
+IT Administrator
+   Nepal Adarsha Nirman Co. Pvt. Ltd. [NANC], Kathmandu, Nepal                                                    Sep 2017- Feb 2019 (1.5 years)
+-	Troubleshooted software, hardware, and network related issues
+-	Developed desktop-based application using Python
+-	Designed webpage using HTML, CSS, JavaScript, jQuery, and WordPress CMS
+-	Communicated with site location to resolve IT hardware or software issues
+IT Analyst
+   MoonStar Tailors, Kathmandu, Nepal                                                    			         Jan 2017- Feb 2019 (2 years)
+-	Leveraged HTML5, CSS3, JavaScript, and JQuery to develop an intuitive webpage for jacket layout and colour matching, optimizing decision-making processes
+-	Configured and managed web, email hosting and seller dashboard for the e-commerce platform
+-	Successfully coordinated interactions with suppliers and clients, ensuring smooth daily company operations
+OTHER EMPLOYMENT EXPERIENCE
+Team Member
+   Coles Group, Victoria Gardens, Melbourne                                                                                                                       Since Jan 2023
+-	Successfully received, processed, and managed inventory stock deliveries and ensured products were placed on the shelves according to the planogram
+-	Assisted customers in locating products and answered their inquiries, improving their shopping experience and customer satisfaction
+-	Demonstrated strict adherence to safety procedures and protocols, ensuring a safe work environment for myself and colleagues during equipment operation, cleaning, and other tasks
+PERSONAL ATTRIBUTES
+-	Problem solving skills and detail oriented which was demonstrated and sharpened while working as IT Administrator
+-	Excellent team player and communicator which can be backed by number of organisations I have worked with
+-	Expert in time management skills developed through 6 years of successfully combining work and university studies
+
+REFERENCES
+Available upon request
