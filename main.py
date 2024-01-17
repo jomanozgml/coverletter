@@ -65,6 +65,7 @@ def submit_form():
     jd_text = jd_textbox.get("1.0", "end-1c")
     resume_text = resume_textbox.get("1.0", "end-1c")
 
+
     if url_textbox.get() == "":
         print("Please provide URL")
         return
@@ -82,10 +83,29 @@ def submit_form():
     generate_content(prompt_parts)
 
 def generate_content(prompt_parts):
+    # Disable the button during processing
+    submit_button.config(state="disabled")
+    copy_button.config(state="disabled")
+    # Display processing message
+    cover_letter_textbox.delete("1.0", "end")
+    cover_letter_textbox.insert("1.0", "\n\nProcessing...")
+
+    # Center the text
+    cover_letter_textbox.tag_configure("center", justify="center", font=("calibri", 24))
+    cover_letter_textbox.tag_add("center", "1.0", "end")
+
+    # Update the GUI to show the processing message
+    root.update_idletasks()
     # response = model.generate_content(prompt_parts)
     response = chat.send_message(prompt_parts)
     cover_letter_textbox.delete("1.0", "end")
     cover_letter_textbox.insert("1.0", response.text)
+
+    # Enable the button after processing is complete
+    submit_button.config(state="normal")
+    copy_button.config(state="normal")
+    # Update the GUI to ensure the message is displayed immediately
+    root.update_idletasks()
 
 def copy_to_clipboard():
     result = cover_letter_textbox.get("1.0", tk.END)
