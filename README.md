@@ -41,9 +41,9 @@ The Cover Letter Generator is a Python application that helps users generate cov
 ## Usage
 1. Launch the application using the instructions in the Installation section.
 2. Enter the job URL, load the job description, and load your resume.
-3. Click the "Generate Cover Letter" button to create a personalized cover letter.
+3. Click the `Generate Cover Letter` button to create a personalized cover letter.
 4. If not happy with the coverletter, write on prompt then hit enter to modify to your needs.
-4. Press `Generate Coverletter` button to cpoy the generated cover letter to the clipboard.
+4. Press `Copy to Clipboard` button to cpoy the generated cover letter to the clipboard.
 
 ## License
 This project is licensed under the [Apache-2.0](https://opensource.org/licenses/Apache-2.0).
@@ -58,4 +58,4 @@ Thanks to the Google Generative AI team for providing the powerful language mode
 ![Cover Letter Generator - UI](UI.png)
 
 ## Contact
-*Email: [manoj.shrestha8080@gmail.com](mailto:manoj.shrestha8080@gmail.com)*
+> Email: [manoj.shrestha8080@gmail.com](mailto:manoj.shrestha8080@gmail.com)
