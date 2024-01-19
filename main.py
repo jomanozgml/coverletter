@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from page_parser import *
 from pyppeteer_check import *
 import asyncio
@@ -119,6 +120,7 @@ def add_query(event):
 root = tk.Tk()
 root.title("Cover Letter Generator")
 root.geometry("800x700")
+root.iconbitmap("icon.ico")
 root.resizable(True, True)
 root.configure(padx=10, pady=10)
 root.option_add("*Font", "calibri 12")
@@ -129,11 +131,14 @@ url_frame = tk.Frame(root)
 url_frame.pack(fill="x", pady=(0, 5))
 url_label = tk.Label(url_frame, text="Job URL:")
 url_label.pack(side="left", padx=(0, 5))
+open_url_icon = tk.PhotoImage(file='link.png')
+open_url_button = ttk.Button(url_frame, image=open_url_icon, command=lambda: open_url(None))
+open_url_button.pack(side="right")
 url_textbox = tk.Entry(url_frame)
-url_textbox.pack(fill="both", expand=True)
+url_textbox.pack(fill="x", expand=True)
 url_textbox.bind("<FocusIn>", select_all_text)
 url_textbox.bind("<Return>", open_url)
-# parse_button = tk.Button(root, text="Parse", command=lambda: new_fetch_vacancy(url_textbox.get()))
+
 
 jd_frame = tk.Frame(root)
 jd_frame.pack(fill="x", pady=(0, 5))
@@ -169,8 +174,12 @@ prompt_frame = tk.Frame(root)
 prompt_frame.pack(fill="x", pady=(5, 5))
 prompt_label = tk.Label(prompt_frame, text="Prompt:")
 prompt_label.pack(side="left", padx=(0, 5))
+prompt_send_icon = tk.PhotoImage(file='send.png')
+prompt_send_button = ttk.Button(prompt_frame, image=prompt_send_icon, command=lambda: add_query(None))
+prompt_send_button.pack(side="right")
 prompt_entry = tk.Entry(prompt_frame)
 prompt_entry.pack(fill="both", expand=True)
+prompt_entry.bind("<FocusIn>", select_all_text)
 prompt_entry.bind("<Return>", add_query)
 
 button_frame = tk.Frame(root)
