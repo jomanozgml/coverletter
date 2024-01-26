@@ -28,7 +28,8 @@ model = genai.GenerativeModel(model_name="gemini-pro",
 
 chat = model.start_chat(history=[])
 
-def new_fetch_vacancy(vacancy_url):
+def new_fetch_vacancy(event):
+    vacancy_url = url_textbox.get()
     print(f'fetch url: {vacancy_url}')
     dynamic_webpage = ['indeed', 'careerjet', 'careerone', 'jora', 'glassdoor']
     if any(x in vacancy_url for x in dynamic_webpage):
@@ -119,7 +120,7 @@ def add_query(event):
 
 root = tk.Tk()
 root.title("Cover Letter Generator")
-root.geometry("800x700")
+root.geometry("600x800")
 root.iconbitmap("icon.ico")
 root.resizable(True, True)
 root.configure(padx=10, pady=10)
@@ -137,14 +138,14 @@ open_url_button.pack(side="right")
 url_textbox = tk.Entry(url_frame)
 url_textbox.pack(fill="x", expand=True)
 url_textbox.bind("<FocusIn>", select_all_text)
-url_textbox.bind("<Return>", open_url)
+url_textbox.bind("<Return>", new_fetch_vacancy)
 
 
 jd_frame = tk.Frame(root)
 jd_frame.pack(fill="x", pady=(0, 5))
 jd_label = tk.Label(jd_frame, text="Job Description:")
 jd_label.pack(side="left", padx=(0, 5))
-load_jd_button = tk.Button(jd_frame, text="Load Job Description", command=lambda: new_fetch_vacancy(url_textbox.get()))
+load_jd_button = tk.Button(jd_frame, text="Load Job Description", command=lambda:new_fetch_vacancy(None))
 load_jd_button.pack(side="left", padx=(10, 0))
 
 # Checkbox to indicate whether the JD contains specified keywords
@@ -152,7 +153,7 @@ checkbox_var = tk.BooleanVar()
 citizenship_checkbox = tk.Checkbutton(jd_frame, text="Citizenship", variable=checkbox_var)
 citizenship_checkbox.pack(side="left", padx=(25, 0))
 
-jd_textbox = tk.Text(root, height=6, width=50)
+jd_textbox = tk.Text(root, height=16)
 jd_textbox.pack(fill="both", expand=True)
 
 resume_frame = tk.Frame(root)
@@ -162,12 +163,12 @@ resume_label.pack(side="left", padx=(0, 5))
 load_resume_button = tk.Button(resume_frame, text="Load Resume", command=load_resume)
 load_resume_button.pack(side="left", padx=(10, 0))
 
-resume_textbox = tk.Text(root, height=6, width=50)
+resume_textbox = tk.Text(root, height=2)
 resume_textbox.pack(fill="both", expand=True)
 
 cover_letter_label = tk.Label(root, text="Cover Letter:")
 cover_letter_label.pack(anchor="w",  pady=(5, 5), padx=(0, 5))
-cover_letter_textbox = tk.Text(root, height=10, width=50)
+cover_letter_textbox = tk.Text(root, height=8)
 cover_letter_textbox.pack(fill="both", expand=True)
 
 prompt_frame = tk.Frame(root)
