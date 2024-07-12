@@ -17,9 +17,9 @@ genai.configure(api_key=os.getenv('API_KEY'))
 
 # Set up the model
 generation_config = {
-  "temperature": 0.9,
-  "top_p": 1,
-  "top_k": 1,
+  "temperature": 0.4,
+  "top_p": 0.7,
+  "top_k": 40,
   "max_output_tokens": 2048,
 }
 
@@ -80,7 +80,8 @@ def submit_form():
 
     prompt_parts = [
     "based on this resume" + resume_text + "and the following job description" + jd_text + \
-        "generate cover letter for given position addressing to key points of job description"]
+        "generate cover letter for given position addressing to key points of job description just the body without salutation such as \
+        'Cover Letter, Dear Hiring Manager' and closing regards like 'Sincerely..'",]
 
     generate_content(prompt_parts)
 
