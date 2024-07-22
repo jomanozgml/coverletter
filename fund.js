@@ -3,16 +3,21 @@ function onFormSubmit(e) {
         Logger.log("Form Submission Event: " + JSON.stringify(e));
 
         var response = e.response.getItemResponses();
-        var studentId = response[0].getResponse(); // Assuming student ID is the first question
-        var studentName = response[1].getResponse(); // Assuming student name is the second question
+        var nicNum = response[0].getResponse(); // Assuming student ID is the first question
+        var submissionType = response[1].getResponse(); // Assuming submission type is the second question
         var uploaderEmail = e.response.getRespondentEmail(); // Get the email address of the respondent
-        var nicNumber = '';
+        var requestFor = '';
+        var studentName = '';
         var mobileNumber = '';
         var email = '';
-        var fileUploads = [];
-        var multipleChoiceAnswer = '';
+        var bankName = '';
+        var branchName = '';
+        var accountName = '';
+        var accountNumber = '';
         var briefDescription = '';
         var amountRequested = '';
+        var fileUploads = [];
+        var fileType = '';
 
         // Iterate over responses to gather all necessary data and find the multiple choice response
         for (var i = 2; i < response.length; i++) {
@@ -23,11 +28,17 @@ function onFormSubmit(e) {
             switch (responseType) {
                 case FormApp.ItemType.TEXT:
                 case FormApp.ItemType.PARAGRAPH_TEXT:
-                    if (questionTitle === 'NIC Number') nicNumber = itemResponse.getResponse();
-                    else if (questionTitle === 'Mobile Number') mobileNumber = itemResponse.getResponse();
-                    else if (questionTitle === 'Email') email = itemResponse.getResponse();
-                    else if (questionTitle === 'Briefly describe your need') briefDescription = itemResponse.getResponse();
-                    else if (questionTitle === 'Amount requested') amountRequested = itemResponse.getResponse();
+                    if (submissionType === 'New') {
+                        if (questionTitle === 'Your full name') studentName = itemResponse.getResponse();
+                        else if (questionTitle === 'Mobile Number') mobileNumber = itemResponse.getResponse();
+                        else if (questionTitle === 'Email') email = itemResponse.getResponse();
+                        else if (questionTitle === 'Your Bank') bankName = itemResponse.getResponse();
+                        else if (questionTitle === 'Branch') branchName = itemResponse.getResponse();
+                        else if (questionTitle === 'Account Name') accountName = itemResponse.getResponse();
+                        else if (questionTitle === 'Account Number') accountNumber = itemResponse.getResponse();
+                        else if (questionTitle === 'Briefly describe your need') briefDescription = itemResponse.getResponse();
+                        else if (questionTitle === 'Total Amount requested') amountRequested = itemResponse.getResponse();
+                    }
                     break;
                 case FormApp.ItemType.FILE_UPLOAD:
                     var fileIds = itemResponse.getResponse();
@@ -36,30 +47,30 @@ function onFormSubmit(e) {
                     }
                     break;
                 case FormApp.ItemType.MULTIPLE_CHOICE:
-                    multipleChoiceAnswer = itemResponse.getResponse();
+                    if (questionTitle === 'Request for') requestFor = itemResponse.getResponse();
+                    else if (questionTitle === 'This is') fileType = itemResponse.getResponse();
                     break;
                 default:
                     Logger.log("Unknown response type for question: " + questionTitle);
             }
         }
 
-        if (studentId && studentName && uploaderEmail) {
-            // Save the details in a single text file
-            var details = "Student ID: " + studentId + "\n" +
-                "Student Name: " + studentName + "\n" +
-                "NIC Number: " + nicNumber + "\n" +
-                "Mobile Number: " + mobileNumber + "\n" +
-                "Email: " + email + "\n" +
-                "Request Type: " + multipleChoiceAnswer + "\n" +
-                "Brief Description: " + briefDescription + "\n" +
-                "Amount Requested: " + amountRequested;
-
-            // if (multipleChoiceAnswer === 'Other Requests') {
-            //     details += "\nBrief Description: " + briefDescription + "\n" +
-            //                "Amount Requested: " + amountRequested;
-            // }
-
-            Logger.log(details);
+        if (nicNum && submissionType && uploaderEmail) {
+            if (submissionType === 'New') {
+                // Save the details in a single text file
+                var details = "NIC Number: " + nicNum + "\n" +
+                    "Request for: " + requestFor + "\n" +
+                    "Your full name: " + studentName + "\n" +
+                    "Mobile Number: " + mobileNumber + "\n" +
+                    "Email: " + email + "\n" +
+                    "Your Bank: " + bankName + "\n" +
+                    "Branch: " + branchName + "\n" +
+                    "Account Name: " + accountName + "\n" +
+                    "Account Number: " + accountNumber + "\n" +
+                    "Brief Description: " + briefDescription + "\n" +
+                    "Total Amount requested: " + amountRequested;
+                    Logger.log(details);
+            }
             Logger.log("Uploader Email: " + uploaderEmail);
 
             var parentFolderId = '1IR5t3khKRe9PONFC-PCk_8whd4K5kqbU';
@@ -72,15 +83,14 @@ function onFormSubmit(e) {
 
             // Create the parent folder if it doesn't exist
             if (!parentFolder) {
-                parentFolder = DriveApp.getRootFolder().createFolder('Student Folder');
+                parentFolder = DriveApp.getRootFolder().createFolder('Students Folder');
             }
 
-
             // Create the folder based on the multiple choice answer
-            var folderName = multipleChoiceAnswer === 'University Edu Support' ? 'University Edu Support' : 'Other Requests';
+            var folderName = submissionType === 'New' ? 'New' : 'Update';
             var subFolder = getOrCreateFolder(parentFolder, folderName);
 
-            var studentFolder = getOrCreateFolder(subFolder, studentId);
+            var studentFolder = getOrCreateFolder(subFolder, nicNum);
 
             // Check if the email file already exists
             var existingFiles = studentFolder.getFilesByName(uploaderEmail + '.txt');
@@ -95,7 +105,8 @@ function onFormSubmit(e) {
             Logger.log("Created email text file: " + emailFile.getName());
 
             // Save details to a text file in the student folder
-            var detailsFile = studentFolder.createFile('details.txt', details);
+            if (submissionType === 'New')
+                studentFolder.createFile('details.txt', details);
 
             // Handle file uploads
             for (var i = 0; i < fileUploads.length; i++) {
@@ -108,7 +119,10 @@ function onFormSubmit(e) {
                         var file = DriveApp.getFileById(fileId);
 
                         // Create new file name
-                        var newFileName = studentId + '-' + studentName + '-' + fileTitle;
+                        if(submissionType === 'New')
+                            var newFileName = nicNum + '-' + studentName + '-' + fileTitle;
+                        else
+                            var newFileName = nicNum + '-' + submissionType + '-' + fileType;
 
                         // Move and rename the file
                         file.moveTo(studentFolder).setName(newFileName);
@@ -122,7 +136,7 @@ function onFormSubmit(e) {
                 }
             }
         } else {
-            Logger.log("Student ID, Student Name, multiple choice answer, or uploader email is undefined.");
+            Logger.log("NIC Number, submission type, or uploader email is undefined.");
         }
     } catch (error) {
         Logger.log("Error: " + error);
