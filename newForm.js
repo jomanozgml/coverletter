@@ -11,17 +11,15 @@ function onFormSubmit(e) {
 
 
         if (orphanID && motherNIC && uploaderEmail) {
-            if (motherNIC === 'New') {
-                // Save the details in a single text file
-                var details = "Orphan ID: " + orphanID + "\n" +
-                    "Mother NIC: " + motherNIC + "\n" +
-                    "Guardian's Phone: " + guardiansPhone + "\n" +
-                    "Uploader Email: " + uploaderEmail + "\n";
-                    Logger.log(details);
-            }
+            // Save the details in a single text file
+            var details = "Orphan ID: " + orphanID + "\n" +
+                "Mother NIC: " + motherNIC + "\n" +
+                "Guardian's Phone: " + guardiansPhone + "\n" +
+                "Uploader Email: " + uploaderEmail + "\n";
+                Logger.log(details);
             Logger.log("Uploader Email: " + uploaderEmail);
 
-            var parentFolderId = '1IR5t3khKRe9PON1jUXt2uBk2VrF-dE0DZMrYwxstHbslFNr';
+            var parentFolderId = '1jUXt2uBk2VrF-dE0DZMrYwxstHbslFNr';
             var parentFolder = null;
             try {
                 parentFolder = DriveApp.getFolderById(parentFolderId);
@@ -53,8 +51,9 @@ function onFormSubmit(e) {
 
             // Handle file uploads
             for (var i = 0; i < fileUploads.length; i++) {
-                var fileId = fileUploads[i].response;
-                var fileTitle = fileUploads[i].title;
+                var uploads = fileUploads[i];
+                var fileId = uploads.getResponse();
+                var fileTitle = uploads.getItem().getTitle();
                 if (fileId) {
                     try {
                         Logger.log("Attempting to get file by ID: " + fileId);
