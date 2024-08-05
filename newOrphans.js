@@ -3,7 +3,7 @@ function onFormSubmit(e) {
         Logger.log("Form Submission Event: " + JSON.stringify(e));
 
         var response = e.response.getItemResponses();
-        var orphanID = response[0].getResponse(); // Assuming orphan ID is the first question
+        var motherNIC = response[0].getResponse(); // Assuming orphan ID is the first question
         // var uploaderEmail = e.response.getRespondentEmail(); // Get the email address of the respondent
         var fileUploads = [];
         var details = '';
@@ -17,6 +17,7 @@ function onFormSubmit(e) {
             switch (responseType) {
                 case FormApp.ItemType.TEXT:
                 case FormApp.ItemType.PARAGRAPH_TEXT:
+                case FormApp.ItemType.DATE:
                     details += questionTitle + ': ' + itemResponse.getResponse() + '\n';
                     break;
                 case FormApp.ItemType.FILE_UPLOAD:
@@ -30,11 +31,11 @@ function onFormSubmit(e) {
             }
         }
 
-        if (orphanID) {
+        if (motherNIC) {
             Logger.log(details);
             // Logger.log("Uploader Email: " + uploaderEmail);
 
-            var parentFolderId = '1jUXt2uBk2VrF-dE0DZMrYwxstHbslFNr';
+            var parentFolderId = '1CxLSQ_VwVGHFCf_1sBIBOCyuDwA23rjk';
             var parentFolder = null;
             try {
                 parentFolder = DriveApp.getFolderById(parentFolderId);
@@ -46,7 +47,7 @@ function onFormSubmit(e) {
             if (!parentFolder) {
                 parentFolder = DriveApp.getRootFolder().createFolder('Old Orphans docs');
             }
-            var studentFolder = getOrCreateFolder(parentFolder, orphanID);
+            var studentFolder = getOrCreateFolder(parentFolder, motherNIC);
             // Save details to a text file in the student folder
             studentFolder.createFile('details.txt', details);
 
@@ -61,7 +62,7 @@ function onFormSubmit(e) {
                         var file = DriveApp.getFileById(fileId);
 
                         // Create new file name
-                        var newFileName = orphanID + '-' + fileTitle;
+                        var newFileName = motherNIC + '-' + fileTitle;
 
                         // Move and rename the file
                         file.moveTo(studentFolder).setName(newFileName);

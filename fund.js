@@ -6,18 +6,10 @@ function onFormSubmit(e) {
         var nicNum = response[0].getResponse(); // Assuming student ID is the first question
         var submissionType = response[1].getResponse(); // Assuming submission type is the second question
         var uploaderEmail = e.response.getRespondentEmail(); // Get the email address of the respondent
-        var requestFor = '';
         var studentName = '';
-        var mobileNumber = '';
-        var email = '';
-        var bankName = '';
-        var branchName = '';
-        var accountName = '';
-        var accountNumber = '';
-        var briefDescription = '';
-        var amountRequested = '';
         var fileUploads = [];
         var fileType = '';
+        var details = '';
 
         // Iterate over responses to gather all necessary data and find the multiple choice response
         for (var i = 2; i < response.length; i++) {
@@ -30,15 +22,8 @@ function onFormSubmit(e) {
                 case FormApp.ItemType.PARAGRAPH_TEXT:
                     if (submissionType === 'New') {
                         if (questionTitle === 'Your full name') studentName = itemResponse.getResponse();
-                        else if (questionTitle === 'Mobile Number') mobileNumber = itemResponse.getResponse();
-                        else if (questionTitle === 'Email') email = itemResponse.getResponse();
-                        else if (questionTitle === 'Your Bank') bankName = itemResponse.getResponse();
-                        else if (questionTitle === 'Branch') branchName = itemResponse.getResponse();
-                        else if (questionTitle === 'Account Name') accountName = itemResponse.getResponse();
-                        else if (questionTitle === 'Account Number') accountNumber = itemResponse.getResponse();
-                        else if (questionTitle === 'Briefly describe your need') briefDescription = itemResponse.getResponse();
-                        else if (questionTitle === 'Total Amount requested') amountRequested = itemResponse.getResponse();
-                    }
+                        details += questionTitle + ': ' + itemResponse.getResponse() + '\n';
+                     }
                     break;
                 case FormApp.ItemType.FILE_UPLOAD:
                     var fileIds = itemResponse.getResponse();
@@ -56,21 +41,7 @@ function onFormSubmit(e) {
         }
 
         if (nicNum && submissionType && uploaderEmail) {
-            if (submissionType === 'New') {
-                // Save the details in a single text file
-                var details = "NIC Number: " + nicNum + "\n" +
-                    "Request for: " + requestFor + "\n" +
-                    "Your full name: " + studentName + "\n" +
-                    "Mobile Number: " + mobileNumber + "\n" +
-                    "Email: " + email + "\n" +
-                    "Your Bank: " + bankName + "\n" +
-                    "Branch: " + branchName + "\n" +
-                    "Account Name: " + accountName + "\n" +
-                    "Account Number: " + accountNumber + "\n" +
-                    "Brief Description: " + briefDescription + "\n" +
-                    "Total Amount requested: " + amountRequested;
-                    Logger.log(details);
-            }
+            Logger.log(details);
             Logger.log("Uploader Email: " + uploaderEmail);
 
             var parentFolderId = '1IR5t3khKRe9PONFC-PCk_8whd4K5kqbU';
