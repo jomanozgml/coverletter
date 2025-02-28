@@ -25,7 +25,7 @@ generation_config = {
   "max_output_tokens": 2048,
 }
 
-model = genai.GenerativeModel(model_name="gemini-pro",
+model = genai.GenerativeModel(model_name="gemini-2.0-flash",
                               generation_config=generation_config)
 
 chat = model.start_chat(history=[])
@@ -124,6 +124,7 @@ def load_template():
 company_name = ""
 
 def convert_cover_letter_to_pdf():
+    global company_name
     if not company_name:
         messagebox.showwarning("Warning", "Company name not available.")
         return
@@ -133,13 +134,19 @@ def convert_cover_letter_to_pdf():
     pdf = MarkdownPdf()
     pdf.add_section(Section(markdown_content), user_css="body {text-align: justify;}")
     pdf.save(f"coverletters/{filename}")
-    # Show success message
-    messagebox.showinfo("Success", f"Cover letter saved as {filename}")
+    # # Show success message and auto close the messagebox after 5 seconds
+    popup = tk.Toplevel(root)
+    popup.title("Success")
+    tk.Label(popup, text = "Cover letter saved. \n This message will disappear in 5 seconds!").pack(pady=20)
+    root.after(5000, popup.destroy)
+
+    # success_message = messagebox.showinfo("Success", f"Cover letter saved as {filename}")
+    # root.after(5000, lambda: success_message.destroy())
     # Open the folder containing the PDF
-    os.startfile("coverletters")
+    # os.startfile("coverletters")
 
 def submit_form():
-    global company_name
+    global company_name, chat
     jd_text = jd_textbox.get("1.0", "end-1c")
     resume_text = resume_textbox.get("1.0", "end-1c")
 
@@ -154,76 +161,82 @@ def submit_form():
         return
 
 
-    details_prompt = f"""From this job description and resume, extract:
-    1. Company name
-    2. Job title
-    3. Hiring manager name (if mentioned, otherwise respond with 'Hiring Manager')
-    4. Applicant name
-    5. Applicant email
-    6. Applicant phone number
+    details_prompt = f"""From this job description {jd_text} and resume {resume_text}, extract only the following details and nothing else in the order separated by new lines:
+    <Company name>
+    <Job title>
+    <Hiring manager name (if mentioned, otherwise respond with 'Hiring Manager')>
+    <Applicant name>
+    <Applicant email>
+    <Applicant phone number>
+    """
 
-    Format your response in exactly six lines:
-    First line: company name
-    Second line: job title
-    Third line: hiring manager name
-    Fourth line: applicant name
-    Fifth line: applicant email
-    Sixth line: applicant phone number
+    try:
+        details_response = chat.send_message(details_prompt)
 
-    Job description: {jd_text}
-    Resume: {resume_text}"""
+        details_lines = details_response.text.strip().split('\n')
+        company_name = details_lines[0].strip()
+        job_title = details_lines[1].strip()
+        hiring_manager = details_lines[2].strip()
+        name = details_lines[3].strip()
+        email = details_lines[4].strip()
+        phone = details_lines[5].strip()
+        current_date = datetime.now().strftime("%B %d, %Y")
 
-    details_response = chat.send_message(details_prompt)
+        # if template_var.get():
+        #     message = [ f"""Write full cover letter by replacing the placeholders in the template
+        #         (retain the markdown syntax) with the following details:
+        #         Date: {current_date}
+        #         Company name: {company_name}
+        #         Job title: {job_title}
+        #         Hiring manager: {hiring_manager}
+        #         in the template provided below:
+        #         {template_content}"""]
 
-    details_lines = details_response.text.strip().split('\n')
-    company_name = details_lines[0].strip()
-    job_title = details_lines[1].strip()
-    hiring_manager = details_lines[2].strip()
-    name = details_lines[3].strip()
-    email = details_lines[4].strip()
-    phone = details_lines[5].strip()
-    current_date = datetime.now().strftime("%B %d, %Y")
+        if template_var.get():
+            # Use string formatting to replace placeholders in the template
+            cover_letter_text = template_content.format(
+                current_date=current_date,
+                company_name=company_name,
+                hiring_manager=hiring_manager,
+                job_title=job_title
+            )
+            cover_letter_textbox.delete("1.0", "end")
+            cover_letter_textbox.insert("1.0", cover_letter_text)
 
-    if template_var.get():
-        message = [ f"""Write full cover letter by replacing the placeholders in the template
-            (retain the markdown syntax) with the following details:
-            Date: {current_date}
-            Company name: {company_name}
-            Job title: {job_title}
-            Hiring manager: {hiring_manager}
-            in the template provided below:
-            {template_content}"""]
-
-    else:
-        message = [
-            f"""Generate a cover letter using the following details:
-            Date: {current_date}
-            Company name: {company_name}
-            Job title: {job_title}
-            Hiring manager: {hiring_manager}
-            Job description: {jd_text}
-            Resume: {resume_text}
-
-            0. Use this format for the cover letter:
+        else:
+            message = [
+                f"""Generate a cover letter in markdown using the following details:
                 Date: {current_date}
-                To,
-                {hiring_manager},
-                {company_name}
-                ...
-                ...
-                Best Regards,
-                {name}
-                {email}
-                {phone}
-            1. Addresses the key requirements from the job description
-            2. Highlights relevant experience from the resume
-            3. Shows enthusiasm for the role at {company_name} for the {job_title} position
-            4. Maintains a professional yet conversational tone
-            5. Bold out the key points and words
-            The content should fit naturally into a professional cover letter format."""
-        ]
+                Company name: {company_name}
+                Job title: {job_title}
+                Hiring manager: {hiring_manager}
+                Job description: {jd_text}
+                Resume: {resume_text}
 
-    generate_content(message)
+                0. Use this format for the cover letter:
+                    Date: {current_date}
+                    To,
+                    {hiring_manager},
+                    {company_name}
+                    ...
+                    ...
+                    Best Regards,
+                    {name}
+                    {email}
+                    {phone}
+                1. Addresses the key requirements from the job description
+                2. Highlights relevant experience from the resume
+                3. Shows enthusiasm for the role at {company_name} for the {job_title} position
+                4. Maintains a professional yet conversational tone
+                5. Bold out the key points and words
+                The content should fit naturally into a professional cover letter format."""
+            ]
+            generate_content(message)
+
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred: {e}\nPlease try again or restart the application.")
+        # Restart the session
+        chat = model.start_chat(history=[])
 
 def generate_content(message):
     # Disable the button during processing
@@ -241,15 +254,20 @@ def generate_content(message):
     # Update the GUI to show the processing message
     root.update_idletasks()
 
-    # response = model.generate_content(prompt_parts)
-    response = chat.send_message(message)
-    cover_letter_textbox.delete("1.0", "end")
-    cover_letter_textbox.insert("1.0", response.text)
+    try:
+        # response = model.generate_content(prompt_parts)
+        response = chat.send_message(message)
+        cover_letter_textbox.delete("1.0", "end")
+        cover_letter_textbox.insert("1.0", response.text)
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred: {e}\nPlease try again or restart the application.")
+        cover_letter_textbox.delete("1.0", "end")
 
     # Enable the button after processing is complete
     submit_button.config(state="normal")
     copy_button.config(state="normal")
     save_pdf_button.config(state="normal")
+
     # Update the GUI to ensure the message is displayed immediately
     root.update_idletasks()
 
