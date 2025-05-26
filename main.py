@@ -100,26 +100,32 @@ def load_resume():
         except Exception as e:
             messagebox.showerror("Error", f"Error loading resume: {str(e)}")
 
-# Function to load template cover letter via file dialog
-def load_template():
+# Function to load template or predefined cover letter
+def load_template(cover_letter_num):
     global template_content
-    file_path = filedialog.askopenfilename(
-        initialdir=".",
-        title="Select Template File",
-        filetypes=(("Markdown files", "*.md"), ("Text files", "*.txt"), ("All files", "*.*"))
-    )
-    if file_path:
-        try:
-            with open(file_path, 'r', encoding='utf-8') as file:
-                template_content = file.read()
-                template_var.set(True)
-                if template_var.get():
-                    cover_letter_textbox.delete('1.0', tk.END)
-                    cover_letter_textbox.insert(tk.END, template_content)
-                else:
-                    cover_letter_textbox.delete('1.0', tk.END)
-        except Exception as e:
-            messagebox.showerror("Error", f"Error loading template: {str(e)}")
+    if cover_letter_num != 0:  # Predefined cover letter selected via radio button
+        file_name = f"CoverLetter{cover_letter_num}.md"
+        file_path = os.path.join(".", file_name)  # Assuming files are in the same directory
+    else:  # No predefined cover letter selected, open file dialog
+        cover_letter_var.set(0)  # Deselect any cover letter radio button
+        file_path = filedialog.askopenfilename(
+            initialdir=".",
+            title="Select Template File",
+            filetypes=(("Markdown files", "*.md"), ("Text files", "*.txt"), ("All files", "*.*"))
+        )
+
+    if file_path:  # If a file path is determined or selected
+            try:
+                with open(file_path, 'r', encoding='utf-8') as file:
+                    template_content = file.read()
+                    template_var.set(True)
+                    if template_var.get():
+                        cover_letter_textbox.delete('1.0', tk.END)
+                        cover_letter_textbox.insert(tk.END, template_content)
+                    else:
+                        cover_letter_textbox.delete('1.0', tk.END)
+            except Exception as e:
+                messagebox.showerror("Error", f"Error loading file: {str(e)}")
 
 company_name = ""
 
@@ -156,10 +162,6 @@ def submit_form():
     if jd_text == "":
         messagebox.showwarning("Warning", "Please load Job Description")
         return
-    if resume_text == "":
-        messagebox.showwarning("Warning", "Please provide Resume")
-        return
-
 
     details_prompt = f"""From this job description {jd_text} and resume {resume_text}, extract only the following details and nothing else in the order separated by new lines:
     <Company name>
@@ -169,7 +171,6 @@ def submit_form():
     <Applicant email>
     <Applicant phone number>
     """
-
     try:
         details_response = chat.send_message(details_prompt)
 
@@ -177,22 +178,9 @@ def submit_form():
         company_name = details_lines[0].strip()
         job_title = details_lines[1].strip()
         hiring_manager = details_lines[2].strip()
-        name = details_lines[3].strip()
-        email = details_lines[4].strip()
-        phone = details_lines[5].strip()
         current_date = datetime.now().strftime("%B %d, %Y")
 
-        # if template_var.get():
-        #     message = [ f"""Write full cover letter by replacing the placeholders in the template
-        #         (retain the markdown syntax) with the following details:
-        #         Date: {current_date}
-        #         Company name: {company_name}
-        #         Job title: {job_title}
-        #         Hiring manager: {hiring_manager}
-        #         in the template provided below:
-        #         {template_content}"""]
-
-        if template_var.get():
+        if template_var.get(): # If template is selected, use it
             # Use string formatting to replace placeholders in the template
             cover_letter_text = template_content.format(
                 current_date=current_date,
@@ -203,7 +191,22 @@ def submit_form():
             cover_letter_textbox.delete("1.0", "end")
             cover_letter_textbox.insert("1.0", cover_letter_text)
 
-        else:
+        else: # If no template is selected, generate a new cover letter
+            if resume_text == "":
+                messagebox.showwarning("Warning", "Please provide Resume")
+                return
+
+            additional_prompt = f"""From this resume {resume_text}, extract only the following details and nothing else in the order separated by new lines:
+            <Applicant name, if mentioned, otherwise respond with 'N/A'>
+            <Applicant email, if mentioned, otherwise respond with 'N/A'>
+            <Applicant phone number (if mentioned, otherwise respond with 'N/A')>
+            """
+            additional_response = chat.send_message(additional_prompt)
+            additional_lines = additional_response.text.strip().split('\n')
+            name = details_lines[0].strip()
+            email = details_lines[1].strip()
+            phone = details_lines[2].strip()
+
             message = [
                 f"""Generate a cover letter in markdown using the following details:
                 Date: {current_date}
@@ -229,6 +232,7 @@ def submit_form():
                 3. Shows enthusiasm for the role at {company_name} for the {job_title} position
                 4. Maintains a professional yet conversational tone
                 5. Bold out the key points and words
+                6. Do not use code blocks or quotes
                 The content should fit naturally into a professional cover letter format."""
             ]
             generate_content(message)
@@ -327,6 +331,7 @@ load_resume_button.pack(side="left")
 resume_textbox = tk.Text(resume_collapsible.sub_frame, height=4, wrap="word")
 resume_textbox.pack(fill="both", expand=True)
 
+# Cover Letter collapsible frame
 coverletter_collapsible = CollapsibleFrame(root, text="Cover Letter")
 coverletter_collapsible.pack(fill="both", expand=True, pady=(0, 5))
 cover_letter_frame = tk.Frame(coverletter_collapsible.sub_frame)
@@ -334,8 +339,18 @@ cover_letter_frame.pack(fill="x", pady=(5, 5))
 template_var = tk.BooleanVar()
 template_check = tk.Checkbutton(cover_letter_frame, text="Use Template", variable=template_var)
 template_check.pack(side="left")
-load_template_button = tk.Button(cover_letter_frame, text="Load Template", command=load_template)
-load_template_button.pack(side="left")
+load_template_button = tk.Button(cover_letter_frame, text="Load Template", command=lambda: load_template(0))
+load_template_button.pack(side="left", padx=5)
+
+# Add three checkboxes for predefined cover letters
+cover_letter_var = tk.IntVar(value=0)
+cover_letter1_check = tk.Radiobutton(cover_letter_frame, text="Template 1", variable=cover_letter_var, value=1, command=lambda: load_template(1))
+cover_letter1_check.pack(side="left", padx=5)
+cover_letter2_check = tk.Radiobutton(cover_letter_frame, text="Template 2", variable=cover_letter_var, value=2, command=lambda: load_template(2))
+cover_letter2_check.pack(side="left", padx=5)
+cover_letter3_check = tk.Radiobutton(cover_letter_frame, text="Template 3", variable=cover_letter_var, value=3, command=lambda: load_template(3))
+cover_letter3_check.pack(side="left", padx=5)
+
 cover_letter_textbox = tk.Text(coverletter_collapsible.sub_frame, height=8, wrap="word")
 cover_letter_textbox.pack(fill="both", expand=True)
 
