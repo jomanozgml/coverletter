@@ -1,6 +1,5 @@
-MANOJ SHRESTHA
-             Northcote, Melbourne                          manoj.shrestha8080@gmail.com	                                   +61 433 920 686
-             linkedin.com/in/manojshrestha8080                                github.com/jomanozgml
+Applicant Name: MANOJ SHRESTHA
+Claremont, Tasmania  |  Email: manoj.shrestha8080@gmail.com  |  Phone: +61 433 920 686  |  https://www.linkedin.com/in/manojshrestha8080  |  https://www.github.com/jomanozgml
 
 PROFESSIONAL PROFILE
 Enthusiastic IT professional with a master’s in information technology and a robust background spanning 2 years in IT administration/analysis, 1 year in software development, and 4 years in customer service roles. Proficient in a range of programming languages such as Python, Flutter, SQL, HTML, CSS, and JavaScript. Actively pursuing a position within the IT industry to capitalize on my diverse experience, offer innovative solutions, and flourish in a collaborative environment.
@@ -12,57 +11,70 @@ KEY SKILLS
 -	Excellent analytical, research and problem-solving skills with modern tools and technology
 -	Skilled in Microsoft 365 (including PowerApps, Power Automate), Photoshop, and WordPress CMS
 
-EDUCATION 
-Professional Year 	
+EDUCATION
+Diploma of Community Services [Studying]
+Certificate III in Individual Support (Ageing & Disability) [Studying]
+Royal GreenHill Institute of Technology, Hobart, Tasmania
+
+Professional Year
 Performance Education, Melbourne
   Key Subjects: Australian Business Culture and Environment, Australian Workplace Skills and Professional Workplace Communication
 
-Master of Information Technology (Major: Software Design and Development/Systems Analysis)	 
+Master of Information Technology (Major: Software Design and Development/Systems Analysis)
   Charles Sturt University, Melbourne, Australia    |    GPA : 6.33 [Distinction]
-		             
+
 RELEVANT EMPLOYMENT EXPERIENCE
-Coding: AI Reviewer [ Contract ]				          				          
+Coding: AI Reviewer [ Contract ]
    Outlier, San Francisco								                                     Since Oct 2024
--	Formulated challenging prompt to see how an Artificial Model (AI) responds and improve the model response by implementing coding expertise 
+-	Formulated challenging prompt to see how an Artificial Model (AI) responds and improve the model response by implementing coding expertise
 -	Reviewed and compared the model responses, and edited the better response to beat the State of The Art (SOTA) LLM
 -	Continuously worked on tricky and edge cases in software development using Python, JavaScript, Java and C++
-Software Developer [ Internship ]				          
+Software Developer [ Internship ]
    People First Healthcare, Melbourne							           	               3 months
 -	Developed a web app to collect consumer feedback tickets from 'Lookout Way' via API and display them to vendors
 -	Built frontend using HTML, CSS, JavaScript, and backend using Python in Google Cloud Function
 -	Hosted on Firebase, FireStore as NoSQL database and GitHub for version control
--	Created Microsoft Power Apps form to capture new lead details and automated sending email on form submission                               
-Junior Full Stack Developer [ Contract ]				          
+-	Created Microsoft Power Apps form to capture new lead details and automated sending email on form submission
+Junior Full Stack Developer [ Contract ]
    Job Search Ninja, Melbourne								                               4 months
 -	Developed User Interface for cross platform application using Flutter (Dart)
 -	Implemented backend as Google Cloud Platform (Firebase) for datastore, hosting and storage buckets
 -	Automated Continuous Integration and Continuous Deployment (CI/CD) using version control tool such as GitHub
--	Executed event-driven Google Cloud Run (Serverless Cloud Function) using Python script                                         
-IT Administrator                                                       					          
+-	Executed event-driven Google Cloud Run (Serverless Cloud Function) using Python script
+IT Administrator
    NANC, Kathmandu										               1.5 years
 -	Troubleshooted software, hardware, and network related issues
 -	Developed desktop-based application using Python
 -	Designed webpage using HTML, CSS, JavaScript, jQuery, and WordPress CMS
 -	Communicated with site location to resolve IT hardware or software issues
-IT Analyst                                                       					          
+IT Analyst
    MoonStar Tailors, Kathmandu, Nepal                                                    			         		                  2 years
 -	Leveraged HTML5, CSS3, JavaScript, and JQuery to develop an intuitive webpage for jacket layout and colour matching, optimizing decision-making processes
 -	Configured and managed web, email hosting and seller dashboard for the e-commerce platform
 -	Successfully coordinated interactions with suppliers and clients, ensuring smooth daily company operations
 OTHER EMPLOYMENT EXPERIENCE
-Team Member				          
+Team Member
    Coles Group, Victoria Gardens, Melbourne                                                                                                                       Since Jan 2023
--	Managed inventory, stoked shelves according to planogram
+-	Managed inventory, stocked shelves according to planogram
 -	Assisted customers, improved shopping experience and satisfaction
 -	Followed safety protocols, ensured safe work environment
+
+Delivery Driver
+	Amazon Flex
+Delivered packages to customers in an efficient manner, ensuringcustomer satisfaction
+Maintained a clean driving record and adhered to all traffic laws
+Utilised Amazon Flex app to manage delivery routes and track package
+Communicated effectively with customers to resolve any delivery issues
+
+
 CERTIFICATION
- 
-Introduction to Cloud Computing	
-Introduction to Data Analytics 	
-  Institute of Applied Technology, TAFE 
-AWS Cloud Conference				               
-AWS Builders Online Series			
-  Amazon Web Services (AWS) 
+Working With Vulnerable People Check (WWVP Volunteer)
+Introduction to Cloud Computing
+Introduction to Data Analytics
+  Institute of Applied Technology, TAFE
+AWS Cloud Conference
+AWS Builders Online Series
+  Amazon Web Services (AWS)
 
 PROJECTS
 Name	Tech Stack and Objective
@@ -72,7 +84,7 @@ View Roster: Web App
 BigWheel Game Stats: Web App
 -	Flutter for UI, Cloud FireStore for Backend, GitHub with CI/CD
 -	To analyze data easily and make decision from generated bar chart
-OCR for Handwritten Notes: Desktop App 
+OCR for Handwritten Notes: Desktop App
 -	Python, VS Code, OpenCV, Tesseract, Windows Power Shell
 -	To research on the mechanism of detection of handwritten alphabets and conversion into editable text with an aim to improve the accuracy of conversion
 

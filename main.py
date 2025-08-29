@@ -227,8 +227,8 @@ def submit_form():
                     {name}
                     {email}
                     {phone}
-                1. Addresses the key requirements from the job description
-                2. Highlights relevant experience from the resume
+                1. Mainly focus on addressing the key requirements from the job description
+                2. Try to incorporate specific examples from your experience
                 3. Shows enthusiasm for the role at {company_name} for the {job_title} position
                 4. Maintains a professional yet conversational tone
                 5. Bold out the key points and words
