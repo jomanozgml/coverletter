@@ -25,7 +25,7 @@ generation_config = {
   "max_output_tokens": 2048,
 }
 
-model = genai.GenerativeModel(model_name="gemini-2.0-flash",
+model = genai.GenerativeModel(model_name="gemini-2.5-flash",
                               generation_config=generation_config)
 
 chat = model.start_chat(history=[])
@@ -203,9 +203,9 @@ def submit_form():
             """
             additional_response = chat.send_message(additional_prompt)
             additional_lines = additional_response.text.strip().split('\n')
-            name = details_lines[0].strip()
-            email = details_lines[1].strip()
-            phone = details_lines[2].strip()
+            name = additional_lines[0].strip()
+            email = additional_lines[1].strip()
+            phone = additional_lines[2].strip()
 
             message = [
                 f"""Generate a cover letter in markdown using the following details:
@@ -218,8 +218,9 @@ def submit_form():
 
                 0. Use this format for the cover letter:
                     Date: {current_date}
-                    To,
-                    {hiring_manager},
+
+                    To
+                    {hiring_manager}
                     {company_name}
                     ...
                     ...
@@ -233,8 +234,14 @@ def submit_form():
                 4. Maintains a professional yet conversational tone
                 5. Bold out the key points and words
                 6. Do not use code blocks or quotes
-                The content should fit naturally into a professional cover letter format."""
+                7. Write it in a way using basic natural words so it looks like it is written by human instead of chatbot
+                8. Start with a professional yet unique opening statement that captures attention and avoids clichés
+                9. Search about the company culture, values, mission, services and recent developments to tailor cover letter
+                The content should fit naturally into a professional cover letter format.
+                In markdown, a line break is represented by two spaces at the end of a line. Please use two spaces at the end of each line where a line break is needed.
+                """
             ]
+
             generate_content(message)
 
     except Exception as e:
