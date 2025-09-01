@@ -25,7 +25,7 @@ generation_config = {
   "max_output_tokens": 2048,
 }
 
-model = genai.GenerativeModel(model_name="gemini-2.5-flash",
+model = genai.GenerativeModel(model_name="gemini-2.0-flash",
                               generation_config=generation_config)
 
 chat = model.start_chat(history=[])
@@ -229,10 +229,10 @@ def submit_form():
                     {email}
                     {phone}
                 1. Mainly focus on addressing the key requirements from the job description
-                2. Try to incorporate specific examples from your experience
+                2. Try to incorporate specific examples from your experience that aligns with skills mentioned in the job description
                 3. Shows enthusiasm for the role at {company_name} for the {job_title} position
                 4. Maintains a professional yet conversational tone
-                5. Bold out the key points and words
+                5. Bold out the key points and words but do not overdo it
                 6. Do not use code blocks or quotes
                 7. Write it in a way using basic natural words so it looks like it is written by human instead of chatbot
                 8. Start with a professional yet unique opening statement that captures attention and avoids clichés
